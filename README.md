@@ -11,3 +11,9 @@ This is our online platform where you'll form your team, join a Hub, practice, a
 ## Learn more
 
 If you want to learn more about this competition, you can do so [here](https://codingcompetitions.withgoogle.com/hashcode).
+
+## Methodology
+
+Process which was used to implement full solutions for each of the problem statements was to create the following four parts:
+
+![Methodology diagram](https://github.com/mateobaricevic/hash-code/blob/main/images/process.png?raw=true)
