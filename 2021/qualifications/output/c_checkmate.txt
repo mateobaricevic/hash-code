@@ -239,7 +239,7 @@ ic-id 1
 ie-id 1
 84
 2
-bfi-ie 1
+bfi-ie 2
 id-ie 1
 85
 0
@@ -446,7 +446,7 @@ bff-bfg 1
 0
 158
 2
-cdc-bfi 1
+cdc-bfi 2
 ie-bfi 1
 159
 1
@@ -586,7 +586,7 @@ cae-cad 1
 3
 cad-cae 1
 bda-cae 1
-chi-cae 1
+chi-cae 3
 205
 2
 cae-caf 1
@@ -902,7 +902,7 @@ dad-dae 1
 305
 4
 ecd-daf 1
-dag-daf 1
+dag-daf 4
 cch-daf 1
 dae-daf 1
 306
@@ -1021,7 +1021,7 @@ ddj-ddi 1
 339
 2
 cej-ddj 1
-dea-ddj 1
+dea-ddj 2
 340
 3
 eec-dea 1
@@ -1201,7 +1201,7 @@ chj-dij 1
 390
 4
 dij-dja 1
-ehc-dja 1
+ehc-dja 2
 cia-dja 1
 djb-dja 1
 391
@@ -1223,7 +1223,7 @@ ehg-dje 1
 djf-dje 1
 395
 3
-cib-djf 1
+cib-djf 2
 djg-djf 1
 ehh-djf 1
 396
@@ -1498,7 +1498,7 @@ ehd-ehe 1
 476
 3
 fei-ehg 1
-dje-ehg 1
+dje-ehg 2
 ehh-ehg 1
 477
 1
@@ -2117,7 +2117,7 @@ gaa-ghc 1
 3
 ghe-ghd 1
 hhd-ghd 1
-ghc-ghd 1
+ghc-ghd 2
 674
 1
 gac-ghe 1

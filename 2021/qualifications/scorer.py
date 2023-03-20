@@ -23,6 +23,7 @@ def score(solution, dataset):
         queues[intersection][street_name].append(car)
         path.pop(0)
 
+    red_lights = {}
     score = 0
     time = 0
     while time < duration:
@@ -31,8 +32,16 @@ def score(solution, dataset):
                 continue
 
             cycle = cycles[intersection]
-            queue = queues[intersection][cycle[time % len(cycle)]]
+            for street, queue in queues[intersection].items():
+                if len(queue) > 0 and street != cycle[time % len(cycle)]:
+                    if intersection not in red_lights:
+                        red_lights[intersection] = {}
+                    if street not in red_lights[intersection]:
+                        red_lights[intersection][street] = 1
+                    else:
+                        red_lights[intersection][street] += 1
 
+            queue = queues[intersection][cycle[time % len(cycle)]]
             if len(queue) > 0 and not travelling[queue[0]]:
                 car = queue.pop(0)
                 street_name = cars[car].pop(0)
@@ -41,7 +50,7 @@ def score(solution, dataset):
 
                 if len(cars[car]) == 0:
                     if time + street_length <= duration:
-                        score += dataset["points"] + duration - time
+                        score += dataset["points"] + duration - time - street_length
                     break
 
                 travelling[car] += street_length
@@ -49,4 +58,4 @@ def score(solution, dataset):
                 break
         travelling = [t - 1 if t > 0 else t for t in travelling]
         time += 1
-    return score
+    return score, red_lights
