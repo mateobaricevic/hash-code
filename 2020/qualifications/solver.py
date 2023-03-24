@@ -4,38 +4,42 @@ import time
 from datetime import timedelta
 
 
-def solve(dataset):
+def solve(dataset, file_name):
     start = time.time()
     libraries = list(copy.deepcopy(dataset['libraries']).values())
     books = copy.deepcopy(dataset['books'])
 
     books.sort(key=operator.itemgetter('score'), reverse=True)
-    libraries.sort(key=operator.itemgetter('n_shipping'), reverse=True)
-    libraries.sort(key=operator.itemgetter('signup_time'))
+    libraries.sort(key=operator.itemgetter('n_books'), reverse=True)
+    libraries.sort(key=operator.itemgetter('n_ship'), reverse=True)
+    libraries.sort(key=operator.itemgetter('signup'))
 
     signup_times = {
         library['id']: sum(
-            [library['signup_time'] for library in libraries[: index + 1]]
+            [library['signup'] for library in libraries[: index + 1]]
         )
         for index, library in enumerate(libraries)
     }
 
     solution = [{'id': library['id'], 'book_ids': []} for library in libraries]
     for progress, book in enumerate(books):
-        for i, library in enumerate(libraries):
+        for library in libraries:
             if book['id'] not in library['book_ids']:
                 continue
-            scanning_time = len(solution[i]['book_ids']) / library['n_shipping']
-            scanning_step = 1 / library['n_shipping']
+            s = [l for l in solution if l['id'] == library['id']][0]
+            scanning_time = len(s['book_ids']) / library['n_ship']
+            scanning_step = 1 / library['n_ship']
             if (
                 signup_times[library['id']] + scanning_time + scanning_step
                 < dataset['days']
             ):
-                solution[i]['book_ids'].append(book['id'])
+                s['book_ids'].append(book['id'])
                 break
-        print(
-            f'Solving... {progress/len(books)*100:.2f}% {str(timedelta(seconds=time.time() - start))[:7]}'
-            + ' ' * 10,
-            end='\r',
-        )
+        if progress % 10 == 0 or progress == len(books):
+            print(
+                f'{file_name} | Solving... {progress/len(books)*100:.1f}% '
+                + f'({str(timedelta(seconds=time.time() - start))[:7]})'
+                + ' ' * 10,
+                end='\r',
+            )
     return [library for library in solution if len(library['book_ids']) > 0]

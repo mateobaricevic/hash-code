@@ -9,14 +9,14 @@ def parse(file_name):
             } for id, score in enumerate(books)
         ]
         libraries = {}
-        for id in range(l):
-            n_books, signup_time, n_shipping = file.readline().split()
+        for library_id in range(l):
+            n_books, signup, n_ship = file.readline().split()
             book_ids = list(map(int, file.readline().split()))
-            libraries[id] = {
-                'id': id,
+            libraries[library_id] = {
+                'id': library_id,
                 'n_books': int(n_books),
-                'signup_time': int(signup_time),
-                'n_shipping': int(n_shipping),
+                'signup': int(signup),
+                'n_ship': int(n_ship),
                 'book_ids': book_ids,
             }
         return {

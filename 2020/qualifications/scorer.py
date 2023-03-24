@@ -3,7 +3,7 @@ from datetime import timedelta
 from time import time as timing
 
 
-def score(solution, dataset):
+def score(solution, dataset, file_name):
     start = timing()
     days = dataset['days']
     books = dataset['books']
@@ -15,17 +15,17 @@ def score(solution, dataset):
         if index > 0:
             signup_times[library['id']] = (
                 signup_times[solution[index - 1]['id']]
-                + libraries[library['id']]['signup_time']
+                + libraries[library['id']]['signup']
             )
         else:
-            signup_times[library['id']] = libraries[library['id']]['signup_time']
+            signup_times[library['id']] = libraries[library['id']]['signup']
 
     time = score = 0
     scanned = [False for _ in range(len(books))]
     while time < days:
         for library in solution:
             if time > signup_times[library['id']]:
-                for _ in range(libraries[library['id']]['n_shipping']):
+                for _ in range(libraries[library['id']]['n_ship']):
                     if len(library['book_ids']) == 0:
                         break
                     book_id = library['book_ids'].pop(0)
@@ -33,9 +33,11 @@ def score(solution, dataset):
                         score += books[book_id]['score']
                         scanned[book_id] = True
         time += 1
-        print(
-            f'Scoring... {time/days*100:.2f}% {str(timedelta(seconds=timing() - start))[:7]}'
-            + ' ' * 10,
-            end='\r',
-        )
+        if time % 10 == 0 or time == days:
+            print(
+                f'{file_name} | Scoring... {time/days*100:.1f}% '
+                + f'({str(timedelta(seconds=timing() - start))[:7]})'
+                + ' ' * 10,
+                end='\r',
+            )
     return score
