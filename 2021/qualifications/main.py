@@ -11,8 +11,9 @@ argument_parser = ArgumentParser()
 argument_parser.add_argument("file_names", nargs="?", default="input/*")
 args = argument_parser.parse_args()
 
+file_names = sorted(glob.glob(args.file_names))
 
-for file_name in glob.glob(args.file_names):
+for file_name in file_names:
     dataset = parser.parse(file_name)
     max_score = 0
     for path in dataset["cars"]:
