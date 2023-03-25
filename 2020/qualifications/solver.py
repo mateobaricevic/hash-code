@@ -24,17 +24,16 @@ def solve(dataset, file_name):
     solution = [{'id': library['id'], 'book_ids': []} for library in libraries]
     for progress, book in enumerate(books):
         for library in libraries:
-            if book['id'] not in library['book_ids']:
-                continue
-            s = [l for l in solution if l['id'] == library['id']][0]
-            scanning_time = len(s['book_ids']) / library['n_ship']
-            scanning_step = 1 / library['n_ship']
-            if (
-                signup_times[library['id']] + scanning_time + scanning_step
-                < dataset['days']
-            ):
-                s['book_ids'].append(book['id'])
-                break
+            if book['id'] in library['book_ids']:
+                s = [l for l in solution if l['id'] == library['id']][0]
+                scanning_time = len(s['book_ids']) / library['n_ship']
+                scanning_step = 1 / library['n_ship']
+                if (
+                    signup_times[library['id']] + scanning_time + scanning_step
+                    < dataset['days']
+                ):
+                    s['book_ids'].append(book['id'])
+                    break
         if progress % 10 == 0 or progress == len(books):
             print(
                 f'{file_name} | Solving... {progress/len(books)*100:.1f}% '
